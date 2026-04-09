@@ -6,7 +6,7 @@
 - USB OTG
 
 # Flashing 
-1. download the apps from the release and install
+1. [download](https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch/releases/download/flasher/ESPFlash.xapk) the apps from the release and install
 2. download the firmware.bin and import in the app
 3. enable otg from android settings and connect the otg cable to the esp8266
 4. flash the firmware in the espflash app

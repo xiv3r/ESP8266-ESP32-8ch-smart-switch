@@ -1,6 +1,6 @@
 # Requirements
 - 8 channel relay 
-- Esp32
+- Esp32 dev
 - Dupont wire
 - Android Phone
 - USB OTG
@@ -14,5 +14,4 @@
 6. open the web browser and type:`192.168.4.1`
 
 # Diagram
-- note: Blue wire is connected to `D23`
 <img src="https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch/blob/main/ESP32/ESP32_Pinout.jpg">

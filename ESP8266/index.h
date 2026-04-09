@@ -1,283 +1,202 @@
 const char MAIN_page[] PROGMEM = R"=====(
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>ESP8266 8 Channel Relay Module</title>
-        <script>
-        var State1;
-        var State2;
-        var State3;
-        var State4;
-        var State5;
-        var State6;
-        var State7;
-        var State8;
-      function DisplayCurrentTime() {
-          var dt = new Date();
-  var weekday = new Array(7);
-  weekday[0] = "Sunday";
-  weekday[1] = "Monday";
-  weekday[2] = "Tuesday";
-  weekday[3] = "Wednesday";
-  weekday[4] = "Thursday";
-  weekday[5] = "Friday";
-  weekday[6] = "Saturday";
-  var dow = weekday[dt.getDay()];
-document.getElementById("datetime").innerHTML = (dow) +" "+ (dt.toLocaleString());
-        setTimeout('DisplayCurrentTime()', 1000);
-      };
-        function GetState()
-        {
-          var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-                            State1 = this.responseXML.getElementsByTagName("analog")[0].childNodes[0].nodeValue;
-                            State2 = this.responseXML.getElementsByTagName("analog")[1].childNodes[0].nodeValue;
-                            State3 = this.responseXML.getElementsByTagName("analog")[2].childNodes[0].nodeValue;
-                            State4 = this.responseXML.getElementsByTagName("analog")[3].childNodes[0].nodeValue;
-                            State5 = this.responseXML.getElementsByTagName("analog")[4].childNodes[0].nodeValue;
-                            State6 = this.responseXML.getElementsByTagName("analog")[5].childNodes[0].nodeValue;
-                            State7 = this.responseXML.getElementsByTagName("analog")[6].childNodes[0].nodeValue;
-                            State8 = this.responseXML.getElementsByTagName("analog")[7].childNodes[0].nodeValue;
-    }
-    if (State1 == 0) {
-    document.getElementById("statled1").innerHTML = "ON";
-    var elem = document.getElementById("statled1");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled1").innerHTML = "OFF";
-    var elem = document.getElementById("statled1");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State2 == 0) {
-    document.getElementById("statled2").innerHTML = "ON";
-    var elem = document.getElementById("statled2");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled2").innerHTML = "OFF";
-    var elem = document.getElementById("statled2");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State3 == 0) {
-    document.getElementById("statled3").innerHTML = "ON";
-    var elem = document.getElementById("statled3");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled3").innerHTML = "OFF";
-    var elem = document.getElementById("statled3");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State4 == 0) {
-    document.getElementById("statled4").innerHTML = "ON";
-    var elem = document.getElementById("statled4");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled4").innerHTML = "OFF";
-    var elem = document.getElementById("statled4");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State5 == 0) {
-    document.getElementById("statled5").innerHTML = "ON";
-    var elem = document.getElementById("statled5");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled5").innerHTML = "OFF";
-    var elem = document.getElementById("statled5");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State6 == 0) {
-    document.getElementById("statled6").innerHTML = "ON";
-    var elem = document.getElementById("statled6");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled6").innerHTML = "OFF";
-    var elem = document.getElementById("statled6");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State7 == 0) {
-    document.getElementById("statled7").innerHTML = "ON";
-    var elem = document.getElementById("statled7");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled7").innerHTML = "OFF";
-    var elem = document.getElementById("statled7");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-    if (State8 == 0) {
-    document.getElementById("statled8").innerHTML = "ON";
-    var elem = document.getElementById("statled8");
-    elem.style.color = "green";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  } else {
-    document.getElementById("statled8").innerHTML = "OFF";
-    var elem = document.getElementById("statled8");
-    elem.style.color = "red";
-    elem.style.background = "white";
-    elem.style.fontSize = "32px";
-    elem.style.fontWeight = "bold";
-  }
-  }
-  xhttp.open("GET", "redstate", true);
-  xhttp.send();
-            setTimeout('GetState()', 4000);
-            
-        };
-      document.addEventListener('DOMContentLoaded', function() {
-        DisplayCurrentTime(),GetState();
-      }, false);
-    </script>
-      <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 Relay Control</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{
+            font-family:system-ui,-apple-system,sans-serif;
+            background:#1a1a2e;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:12px;
+        }
+        .container{
+            max-width:500px;
+            width:100%;
+            background:#16213e;
+            border-radius:16px;
+            padding:16px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.3);
+        }
+        .time-display{
+            background:#0f3460;
+            color:#e94560;
+            text-align:center;
+            padding:12px;
+            border-radius:10px;
+            font-size:1.3rem;
+            font-weight:bold;
+            margin-bottom:16px;
+            letter-spacing:0.5px;
+        }
+        .grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+        }
+        .btn{
+            background:#0f3460;
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            padding:14px 8px;
+            font-size:1.2rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:all 0.2s;
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            box-shadow:0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn:hover{
+            background:#e94560;
+            transform:scale(0.98);
+        }
+        .btn:active{
+            background:#c73e54;
+        }
+        .status{
+            padding:4px 12px;
+            border-radius:20px;
+            font-size:1rem;
+            min-width:55px;
+            text-align:center;
+        }
+        .status.on{
+            background:#00b894;
+            color:#fff;
+        }
+        .status.off{
+            background:#d63031;
+            color:#fff;
+        }
+        .full-width{
+            grid-column:span 2;
+        }
+        .action-btn{
+            background:#533483;
+        }
+        .action-btn:hover{
+            background:#e94560;
+        }
+        @media (max-width:400px){
+            .container{padding:12px}
+            .btn{font-size:1rem;padding:12px 6px}
+            .time-display{font-size:1.1rem}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="time-display" id="datetime"></div>
+    <div class="grid">
+        <button class="btn" onclick="toggleRelay(1)">
+            Relay 1 <span class="status" id="statled1">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(2)">
+            Relay 2 <span class="status" id="statled2">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(3)">
+            Relay 3 <span class="status" id="statled3">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(4)">
+            Relay 4 <span class="status" id="statled4">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(5)">
+            Relay 5 <span class="status" id="statled5">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(6)">
+            Relay 6 <span class="status" id="statled6">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(7)">
+            Relay 7 <span class="status" id="statled7">---</span>
+        </button>
+        <button class="btn" onclick="toggleRelay(8)">
+            Relay 8 <span class="status" id="statled8">---</span>
+        </button>
+        <button class="btn action-btn full-width" onclick="allOn()">
+            ⚡ ALL ON
+        </button>
+        <button class="btn action-btn full-width" onclick="allOff()">
+            🔴 ALL OFF
+        </button>
+    </div>
+</div>
 
-  body {
-  text-align: center;
-  background-color: #ffaaaa;
-  }
-  table {
-  text-align: center;
-  border: 2px solid #ff00ff;
-  background-color: #ffffff;
-  width:100%;
-  color: #0000ff;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  }
-  td {
-  border: 2px solid #ff0000;
-  background-color: #ffff00;
-  padding: 16px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  }
-  .button-led {
-  padding: 5px 5px 5px 5px;
-  width: 100%;
-  border: #fbfb00 solid 3px;
-  background-color: #ff00ff;
-  color:white;
-  font-size:33px;
-  padding-bottom:5px;
-  font-weight:700;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  }
-  .button-led:hover {
-  background-color: #0000ff;
-  color: #ff93bd;
-  }
-  .dtime {
-  padding: 5px 5px 5px 5px;
-  width: 100%;
-  border: #fbfb00 solid 3px;
-  background-color: #ffffff;
-  color:red;
-  font-size:30px;
-  padding-bottom:5px;
-  font-weight:700;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  }
-  </style>
-    </head>
-    <body>
-   <td>
-   <b class="dtime"><span id="datetime"></span></b>
-   </td>
-    <table>
-   <tr>
-        <td>
-  <form action="/LED1" method="POST">
-      <button type="submit" class="button-led">Relay1 <span id="statled1"></span></button>
-  </form></td>
-        <td style='width:40%'>
-  <form action="/LED2" method="POST">
-      <button type="submit" class="button-led">Relay2 <span id="statled2"></span></button>
-  </form></td>
-  </tr>
-   <tr>
-        <td style='width:40%'>
-  <form action="/LED3" method="POST">
-      <button type="submit" class="button-led">Relay3 <span id="statled3"></span></button>
-  </form></td>
-        <td style='width:40%'>
-  <form action="/LED4" method="POST">
-      <button type="submit" class="button-led">Relay4 <span id="statled4"></span></button>
-  </form></td>
-  </tr>
-   <tr>
-        <td>
-  <form action="/LED5" method="POST">
-      <button type="submit" class="button-led">Relay5 <span id="statled5"></span></button>
-  </form></td>
-        <td style='width:40%'>
-  <form action="/LED6" method="POST">
-      <button type="submit" class="button-led">Relay6 <span id="statled6"></span></button>
-  </form></td>
-  </tr>
-   <tr>
-        <td style='width:40%'>
-  <form action="/LED7" method="POST">
-      <button type="submit" class="button-led">Relay7 <span id="statled7"></span></button>
-  </form></td>
-        <td style='width:40%'>
-  <form action="/LED8" method="POST">
-      <button type="submit" class="button-led">Relay8 <span id="statled8"></span></button>
-  </form></td>
-  </tr>
-   <tr>
-        <td style='width:40%'>
-  <form action="/allon" method="POST">
-      <button type="submit" class="button-led">All Relay ON</button>
-  </form></td>
-        <td style='width:40%'>
-  <form action="/alloff" method="POST">
-      <button type="submit" class="button-led">All Relay OFF</button>
-  </form></td>
-  </tr>
-    </table>
-    </body>
+<script>
+(function(){
+    var states=[0,0,0,0,0,0,0,0];
+    
+    function updateTime(){
+        var d=new Date();
+        var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        document.getElementById('datetime').textContent=
+            days[d.getDay()]+' '+d.toLocaleString();
+    }
+    
+    function updateUI(){
+        for(var i=1;i<=8;i++){
+            var el=document.getElementById('statled'+i);
+            var isOn=(states[i-1]==0);
+            el.textContent=isOn?'ON':'OFF';
+            el.className='status '+(isOn?'on':'off');
+        }
+    }
+    
+    function sendRequest(url){
+        var x=new XMLHttpRequest();
+        x.open('POST',url,true);
+        x.send();
+    }
+    
+    function fetchStates(){
+        var x=new XMLHttpRequest();
+        x.onreadystatechange=function(){
+            if(this.readyState==4 && this.status==200){
+                var xml=this.responseXML;
+                if(xml){
+                    for(var i=0;i<8;i++){
+                        var val=xml.getElementsByTagName('analog')[i].childNodes[0].nodeValue;
+                        states[i]=parseInt(val);
+                    }
+                    updateUI();
+                }
+            }
+        };
+        x.open('GET','redstate',true);
+        x.send();
+    }
+    
+    window.toggleRelay=function(num){
+        sendRequest('/LED'+num);
+        setTimeout(fetchStates,300);
+    };
+    
+    window.allOn=function(){
+        sendRequest('/allon');
+        setTimeout(fetchStates,300);
+    };
+    
+    window.allOff=function(){
+        sendRequest('/alloff');
+        setTimeout(fetchStates,300);
+    };
+    
+    setInterval(updateTime,1000);
+    setInterval(fetchStates,4000);
+    updateTime();
+    fetchStates();
+})();
+</script>
+</body>
 </html>
 )=====";

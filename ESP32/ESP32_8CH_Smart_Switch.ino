@@ -1,4 +1,8 @@
-// REQUIRES the following Arduino libraries:
+// ESP32 8 CHANNEL RELAY SMART SWITCH 
+// Authored by Xiv3r
+// github.com/xiv3r
+// https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch
+
 #include <EEPROM.h>
 #include <WiFi.h>
 #include <WebServer.h>

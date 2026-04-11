@@ -69,7 +69,7 @@ struct SystemConfig {
 SystemConfig sysConfig;
 bool wifiConnected = false;
 unsigned long lastNTPSync = 0;
-const unsigned long NTP_SYNC_INTERVAL = 1800000; // 30 minutes
+const unsigned long NTP_SYNC_INTERVAL = 60000; // 1 minutes
 
 // HTML Pages
 const char index_html[] PROGMEM = R"rawliteral(
@@ -511,8 +511,8 @@ const char ntp_html[] PROGMEM = R"rawliteral(
             fetch('/api/ntp')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('ntpServer').value = data.ntpServer || 'pool.ntp.org';
-                    document.getElementById('gmtOffset').value = data.gmtOffset || 19800;
+                    document.getElementById('ntpServer').value = data.ntpServer || 'ph.pool.ntp.org';
+                    document.getElementById('gmtOffset').value = data.gmtOffset || 28800;
                     document.getElementById('daylightOffset').value = data.daylightOffset || 0;
                 })
                 .catch(error => {

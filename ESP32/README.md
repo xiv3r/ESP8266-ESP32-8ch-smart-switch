@@ -1,6 +1,6 @@
 # Requirements
 - 8 channel relay 
-- ESP32
+- ESP32 30P
 - Dupont wire
 - Android Phone
 - USB OTG

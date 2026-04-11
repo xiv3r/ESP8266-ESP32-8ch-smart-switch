@@ -12,7 +12,7 @@
 #define EEPROM_VERSION 1
 
 // WiFi AP Configuration
-const char* ap_ssid = "ESP32_8CH_Timer_Switch";
+const char* ap_ssid = "ESP32_8CH_Smart_Switch";
 const char* ap_password = "ESP32-admin";
 
 // DNS and Web Server
@@ -76,7 +76,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ESP32 8 Channel Relay Smart Switch</title>
+    <title>ESP32 8-Channel Relay Smart Switch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: Arial; margin: 10px; background: #f0f0f0; }
@@ -106,7 +106,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <body>
     <div class="container">
         <div class="header">
-            <h1>ESP32 8 Channel Relay Smart Switch</h1>
+            <h1>ESP32 8-Channel Relay Smart Switch</h1>
             <div class="nav">
                 <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>
@@ -327,7 +327,7 @@ const char index_html[] PROGMEM = R"rawliteral(
             }
         }, 60000);
         
-        setInterval(updateTime, 10000);
+        setInterval(updateTime, 1000);
         updateTime();
     </script>
 </body>

@@ -76,7 +76,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ESP32 8-Channel Relay Timer</title>
+    <title>ESP32 8 Channel Relay Smart Switch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: Arial; margin: 10px; background: #f0f0f0; }
@@ -106,7 +106,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <body>
     <div class="container">
         <div class="header">
-            <h1>ESP32 8CH Relay Timer Switch</h1>
+            <h1>ESP32 8 Channel Relay Smart Switch</h1>
             <div class="nav">
                 <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>

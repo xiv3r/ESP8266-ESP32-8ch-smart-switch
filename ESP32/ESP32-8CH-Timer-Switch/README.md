@@ -7,7 +7,7 @@
 - Download the firmware and flash using `0x0` offset
 
 # Pinouts
-
+```
 RELAY     ESP32 38P
 VCC _____ 5VIN 
 IN1 _____ D32 GPIO
@@ -19,3 +19,4 @@ IN6 _____ D14 GPIO
 IN7 _____ D16 GPIO
 IN8 _____ D17 GPIO
 GND _____ GND
+```

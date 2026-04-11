@@ -361,9 +361,9 @@ const char wifi_html[] PROGMEM = R"rawliteral(
         <div class="header">
             <h1>WiFi Station Settings</h1>
             <div class="nav">
-                <a href="/">Relays</a>
+                <a href="/">Relay Settings</a>
                 <a href="/wifi">WiFi Settings</a>
-                <a href="/ntp">NTP/RTC Settings</a>
+                <a href="/ntp">Time Settings</a>
             </div>
         </div>
         

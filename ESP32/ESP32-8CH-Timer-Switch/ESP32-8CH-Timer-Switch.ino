@@ -13,7 +13,7 @@
 
 // WiFi AP Configuration
 const char* ap_ssid = "ESP32_8CH_Timer_Switch";
-const char* ap_password = "12345678";
+const char* ap_password = "ESP32-admin";
 
 // DNS and Web Server
 DNSServer dnsServer;
@@ -361,7 +361,7 @@ const char wifi_html[] PROGMEM = R"rawliteral(
         <div class="header">
             <h1>WiFi Station Settings</h1>
             <div class="nav">
-                <a href="/">Relay Settings</a>
+                <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>
                 <a href="/ntp">Time Settings</a>
             </div>

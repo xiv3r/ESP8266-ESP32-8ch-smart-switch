@@ -1,7 +1,7 @@
 # Requirements
-- 8 Channel Relay
+- 8-Channel Relay
 - ESP8266 12E
-- DUPONT WIRE
+- Dupont Wire
 
 # Installation
 - Download the firmware and flash using `0x0` offset

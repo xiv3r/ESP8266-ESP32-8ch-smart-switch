@@ -756,8 +756,8 @@ void loadConfiguration() {
     sysConfig.version = EEPROM_VERSION;
     strcpy(sysConfig.sta_ssid, "");
     strcpy(sysConfig.sta_password, "");
-    strcpy(sysConfig.ntp_server, "pool.ntp.org");
-    sysConfig.gmt_offset = 19800;
+    strcpy(sysConfig.ntp_server, "ph.pool.ntp.org");
+    sysConfig.gmt_offset = 28800;
     sysConfig.daylight_offset = 0;
     saveConfiguration();
   }

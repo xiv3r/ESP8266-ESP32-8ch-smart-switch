@@ -37,7 +37,7 @@ NTPClient timeClient(ntpUDP, ntpServer, gmtOffset_sec, daylightOffset_sec);
 // Relay Configuration
 #define NUM_RELAYS 8
 const int relayPins[NUM_RELAYS] = {D0, D1, D2, D3, D4, D5, D6, D7}; // ESP8266 GPIO pins
-const bool relayActiveLow = false; // Set true for active LOW relays
+const bool relayActiveLow = true; // Set true for active LOW relays
 
 // Timer Schedule Structure
 struct TimerSchedule {

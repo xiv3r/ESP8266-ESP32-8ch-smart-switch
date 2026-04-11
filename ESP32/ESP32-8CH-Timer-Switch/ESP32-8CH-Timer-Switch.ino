@@ -478,11 +478,11 @@ const char ntp_html[] PROGMEM = R"rawliteral(
             <form onsubmit="saveNTP(event)">
                 <div class="form-group">
                     <label>NTP Server:</label>
-                    <input type="text" id="ntpServer" value="pool.ntp.org" required>
+                    <input type="text" id="ntpServer" value="ph.pool.ntp.org" required>
                 </div>
                 <div class="form-group">
                     <label>GMT Offset (seconds):</label>
-                    <input type="number" id="gmtOffset" required>
+                    <input type="number" id="gmtOffset" value="28800" required>
                 </div>
                 <div class="form-group">
                     <label>Daylight Offset (seconds):</label>

@@ -106,7 +106,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <body>
     <div class="container">
         <div class="header">
-            <h1>ESP32 8 Relay Timer Switch</h1>
+            <h1>ESP32 8CH Relay Timer Switch</h1>
             <div class="nav">
                 <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>
@@ -325,9 +325,9 @@ const char index_html[] PROGMEM = R"rawliteral(
             if (!isLoading) {
                 loadRelays();
             }
-        }, 10000);
+        }, 60000);
         
-        setInterval(updateTime, 1000);
+        setInterval(updateTime, 10000);
         updateTime();
     </script>
 </body>
@@ -445,7 +445,7 @@ const char ntp_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NTP & RTC Settings</title>
+    <title>Time Settings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: Arial; margin: 10px; background: #f0f0f0; }
@@ -466,11 +466,11 @@ const char ntp_html[] PROGMEM = R"rawliteral(
 <body>
     <div class="container">
         <div class="header">
-            <h1>NTP & RTC Settings</h1>
+            <h1>Time Settings</h1>
             <div class="nav">
-                <a href="/">Relays</a>
+                <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>
-                <a href="/ntp">NTP/RTC Settings</a>
+                <a href="/ntp">Time Settings</a>
             </div>
         </div>
         

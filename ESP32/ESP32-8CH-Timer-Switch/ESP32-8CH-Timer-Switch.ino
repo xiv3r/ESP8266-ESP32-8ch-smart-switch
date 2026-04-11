@@ -12,7 +12,7 @@
 #define EEPROM_VERSION 1
 
 // WiFi AP Configuration
-const char* ap_ssid = "ESP32_Relay_Config";
+const char* ap_ssid = "ESP32_8CH_Timer_Switch";
 const char* ap_password = "12345678";
 
 // DNS and Web Server
@@ -21,8 +21,8 @@ WebServer server(80);
 const byte DNS_PORT = 53;
 
 // NTP Configuration
-const char* ntpServer = "pool.ntp.org";
-long gmtOffset_sec = 19800;  // Default: India GMT+5:30
+const char* ntpServer = "ph.pool.ntp.org";
+long gmtOffset_sec = 28800;  // Default: Phillipines GMT+8:00
 int daylightOffset_sec = 0;
 
 // WiFi Station Configuration
@@ -35,7 +35,7 @@ NTPClient timeClient(ntpUDP, ntpServer, gmtOffset_sec, daylightOffset_sec);
 
 // Relay Configuration
 #define NUM_RELAYS 8
-const int relayPins[NUM_RELAYS] = {32, 33, 25, 26, 27, 14, 12, 13}; // Adjust pins as needed
+const int relayPins[NUM_RELAYS] = {32, 33, 25, 26, 27, 14, 16, 17}; // Adjust pins as needed
 const bool relayActiveLow = false; // Set true for active LOW relays
 
 // Timer Schedule Structure
@@ -69,7 +69,7 @@ struct SystemConfig {
 SystemConfig sysConfig;
 bool wifiConnected = false;
 unsigned long lastNTPSync = 0;
-const unsigned long NTP_SYNC_INTERVAL = 3600000; // 1 hour
+const unsigned long NTP_SYNC_INTERVAL = 1800000; // 30 minutes
 
 // HTML Pages
 const char index_html[] PROGMEM = R"rawliteral(
@@ -106,11 +106,11 @@ const char index_html[] PROGMEM = R"rawliteral(
 <body>
     <div class="container">
         <div class="header">
-            <h1>ESP32 8-Channel Relay Timer</h1>
+            <h1>ESP32 8 Relay Timer Switch</h1>
             <div class="nav">
-                <a href="/">Relays</a>
+                <a href="/">Relays Settings</a>
                 <a href="/wifi">WiFi Settings</a>
-                <a href="/ntp">NTP/RTC Settings</a>
+                <a href="/ntp">Time Settings</a>
                 <span style="float: right;" id="currentTime">--:--:--</span>
             </div>
         </div>

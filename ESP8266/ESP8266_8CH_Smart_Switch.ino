@@ -1,15 +1,10 @@
-// ESP8266 8 CHANNEL RELAY SMART SWITCH 
-// Authored by Xiv3r
-// github.com/xiv3r
-// https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch
-
 #include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <DNSServer.h>
 #include "index.h"
 
-#define EEPROM_SIZE 9
+#define EEPROM_SIZE 512
 ESP8266WebServer server(80);
 DNSServer dnsServer;
 
@@ -18,13 +13,34 @@ int relay5 = 14, relay6 = 12, relay7 = 13, relay8 = 3;
 int state1 = HIGH, state2 = HIGH, state3 = HIGH, state4 = HIGH;
 int state5 = HIGH, state6 = HIGH, state7 = HIGH, state8 = HIGH;
 
-const char* ApSsid = "ESP8266_8CH_Smart_Switches";
-const char* ApPassword = "ESP8266-admin";
+// Default relay names
+String relayNames[8] = {
+  "Relay 1", "Relay 2", "Relay 3", "Relay 4",
+  "Relay 5", "Relay 6", "Relay 7", "Relay 8"
+};
+
+// WiFi credentials
+String wifiSsid = "ESP8266_8CH_Smart_Switches";
+String wifiPassword = "ESP8266-admin";
+
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 4, 1);
 IPAddress netMsk(255, 255, 255, 0);
 
-// Captive portal handler - redirects all requests to root
+// EEPROM addresses
+// 0: reserved
+// 1-8: relay states
+// 9-188: relay names (20 chars each * 8 relays = 160 bytes)
+// 189-220: WiFi SSID (32 bytes max)
+// 221-284: WiFi Password (64 bytes max)
+#define EEPROM_NAMES_START 9
+#define EEPROM_WIFI_SSID_START 189
+#define EEPROM_WIFI_PASS_START 221
+#define MAX_NAME_LENGTH 20
+#define MAX_SSID_LENGTH 32
+#define MAX_PASS_LENGTH 64
+
+// Captive portal handler
 bool captivePortal() {
   if (!isIp(server.hostHeader()) && server.hostHeader() != (String("192.168.4.1"))) {
     server.sendHeader("Location", String("http://192.168.4.1"), true);
@@ -169,13 +185,149 @@ void handlestate() {
   server.send(200, "text/xml", content);
 }
 
+void handleGetNames() {
+  String json = "{";
+  for(int i = 0; i < 8; i++) {
+    json += "\"relay" + String(i+1) + "\":\"" + relayNames[i] + "\"";
+    if(i < 7) json += ",";
+  }
+  json += "}";
+  server.send(200, "application/json", json);
+}
+
+void handleUpdateName() {
+  if(server.hasArg("relay") && server.hasArg("name")) {
+    int relayNum = server.arg("relay").toInt();
+    String newName = server.arg("name");
+    
+    if(relayNum >= 1 && relayNum <= 8 && newName.length() > 0 && newName.length() <= MAX_NAME_LENGTH) {
+      relayNames[relayNum-1] = newName;
+      saveRelayName(relayNum-1, newName);
+      server.send(200, "text/plain", "OK");
+      return;
+    }
+  }
+  server.send(400, "text/plain", "Invalid request");
+}
+
+// WiFi configuration handlers
+void handleGetWifiConfig() {
+  String json = "{";
+  json += "\"ssid\":\"" + wifiSsid + "\",";
+  json += "\"password\":\"" + wifiPassword + "\"";
+  json += "}";
+  server.send(200, "application/json", json);
+}
+
+void handleUpdateWifi() {
+  if(server.hasArg("ssid") && server.hasArg("password")) {
+    String newSsid = server.arg("ssid");
+    String newPass = server.arg("password");
+    
+    if(newSsid.length() > 0 && newSsid.length() <= MAX_SSID_LENGTH && 
+       newPass.length() <= MAX_PASS_LENGTH) {
+      wifiSsid = newSsid;
+      wifiPassword = newPass;
+      saveWifiConfig();
+      
+      server.send(200, "text/plain", "OK");
+      
+      // Restart AP with new credentials after a short delay
+      delay(1000);
+      WiFi.softAP(wifiSsid.c_str(), wifiPassword.length() > 0 ? wifiPassword.c_str() : NULL);
+      return;
+    }
+  }
+  server.send(400, "text/plain", "Invalid request");
+}
+
+void saveWifiConfig() {
+  // Save SSID
+  int addr = EEPROM_WIFI_SSID_START;
+  for(int i = 0; i < MAX_SSID_LENGTH; i++) {
+    if(i < wifiSsid.length()) {
+      EEPROM.write(addr + i, wifiSsid[i]);
+    } else {
+      EEPROM.write(addr + i, 0);
+    }
+  }
+  
+  // Save Password
+  addr = EEPROM_WIFI_PASS_START;
+  for(int i = 0; i < MAX_PASS_LENGTH; i++) {
+    if(i < wifiPassword.length()) {
+      EEPROM.write(addr + i, wifiPassword[i]);
+    } else {
+      EEPROM.write(addr + i, 0);
+    }
+  }
+  EEPROM.commit();
+}
+
+void loadWifiConfig() {
+  // Load SSID
+  int addr = EEPROM_WIFI_SSID_START;
+  String ssid = "";
+  for(int i = 0; i < MAX_SSID_LENGTH; i++) {
+    char c = EEPROM.read(addr + i);
+    if(c == 0 || c == 255) break;
+    ssid += c;
+  }
+  if(ssid.length() > 0) {
+    wifiSsid = ssid;
+  }
+  
+  // Load Password
+  addr = EEPROM_WIFI_PASS_START;
+  String pass = "";
+  for(int i = 0; i < MAX_PASS_LENGTH; i++) {
+    char c = EEPROM.read(addr + i);
+    if(c == 0 || c == 255) break;
+    pass += c;
+  }
+  if(pass.length() > 0) {
+    wifiPassword = pass;
+  }
+}
+
+void saveRelayName(int index, String name) {
+  int addr = EEPROM_NAMES_START + (index * MAX_NAME_LENGTH);
+  for(int i = 0; i < MAX_NAME_LENGTH; i++) {
+    if(i < name.length()) {
+      EEPROM.write(addr + i, name[i]);
+    } else {
+      EEPROM.write(addr + i, 0);
+    }
+  }
+  EEPROM.commit();
+}
+
+void loadRelayNames() {
+  for(int i = 0; i < 8; i++) {
+    int addr = EEPROM_NAMES_START + (i * MAX_NAME_LENGTH);
+    String name = "";
+    for(int j = 0; j < MAX_NAME_LENGTH; j++) {
+      char c = EEPROM.read(addr + j);
+      if(c == 0 || c == 255) break;
+      name += c;
+    }
+    if(name.length() > 0) {
+      relayNames[i] = name;
+    }
+  }
+}
+
 void setup() {
   EEPROM.begin(EEPROM_SIZE);
+  
+  // Load saved configurations
+  loadRelayNames();
+  loadWifiConfig();
   
   // Set up Access Point with static IP
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(apIP, apIP, netMsk);
-  WiFi.softAP(ApSsid, ApPassword);
+  WiFi.softAP(wifiSsid.c_str(), wifiPassword.length() > 0 ? wifiPassword.c_str() : NULL);
   
   // Start DNS server for captive portal
   dnsServer.start(DNS_PORT, "*", apIP);
@@ -202,6 +354,10 @@ void setup() {
   server.on("/allon", handleallon);
   server.on("/alloff", handlealloff);
   server.on("/redstate", handlestate);
+  server.on("/getnames", handleGetNames);
+  server.on("/updatename", handleUpdateName);
+  server.on("/getwifi", handleGetWifiConfig);
+  server.on("/updatewifi", handleUpdateWifi);
   
   // Captive portal handlers
   server.onNotFound([]() {

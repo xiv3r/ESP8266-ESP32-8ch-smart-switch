@@ -20,7 +20,7 @@ jobs:
         mkdir -p downloads
         cd downloads
         # wget -O ESPFlash.xapk "https://d-13.winudf.com/b/XAPK/aW8uc2VyaWFsZmxvdy5lc3BmbGFzaF80MV8zZTQ3YTBmZA?_fn=RVNQRmxhc2gtRVNQMzIvRVNQODI2NkZsYXNoZXJfMS4yLjlfQVBLUHVyZS54YXBr&_p=aW8uc2VyaWFsZmxvdy5lc3BmbGFzaA%3D%3D&download_id=otr_1993706922202393&is_hot=false&k=bc569326cb38edcf394b360dd34d4f8869d8577f"
-        wget -O ArduinoDroid_Premium_v7.4.1.apk "https://fs21.uploadrar.com:183/d/mtswakczamubi775osh6zkmizzyxmyawe7tdygeigpg2fa3cf35r3pydhdwp3ij6lvilnaut/ArduinoDroid-Arduino-ESPIDEv7.4.1b872arm648.0_edbyyouarefinished-a2zapk.io.apk"
+        wget -O ArduinoDroid_Premium_v7.4.1.apk --no-check-certificate "https://fs21.uploadrar.com:183/d/mtswakczamubi775osh6zkmizzyxmyawe7tdygeigpg2fa3cf35r3pydhdwp3ij6lvilnaut/ArduinoDroid-Arduino-ESPIDEv7.4.1b872arm648.0_edbyyouarefinished-a2zapk.io.apk"
          
     - name: Determine release tag
       id: get_tag

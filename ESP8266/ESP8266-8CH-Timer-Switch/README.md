@@ -1,7 +1,11 @@
 # Requirements
 - 8-Channel Relay
-- ESP8266 12E
+- ESP8266 12* Nodemcu
 - Dupont Wire
+
+# Arduino Libraries 
+- NTPClient
+- ArduinoJson
 
 # Installation
 - Download the firmware and flash using `0x0` offset

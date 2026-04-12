@@ -1,7 +1,11 @@
 # Requirements
-- 8 Channel Relay
-- ESP32 38P
-- DUPONT WIRE
+- 8-Channel Relay
+- ESP32 30/38P
+- Dupont Wire
+
+# Arduino Library
+- NTPClient
+- ArduinoJson
 
 # Installation
 - Download the firmware and flash using `0x0` offset

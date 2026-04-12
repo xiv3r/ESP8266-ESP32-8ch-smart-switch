@@ -1,6 +1,6 @@
 # Requirements
 - 8-Channel Relay
-- ESP32 30/38P
+- ESP32 30/38 Pins
 - Dupont Wire
 
 # Arduino Library

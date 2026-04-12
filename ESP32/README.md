@@ -12,7 +12,7 @@ esptool.py --port COM3 --baud 115200 write_flash 0x0 ESP32-8CH-firmware-0x0.bin
 2. Connect to the wifi ssid:`ESP32_8CH_Smart_Switches` password:`ESP32-admin`
 3. Open the web browser and type:`192.168.4.1`
 
-# Diagram
+# Schematic
 ```
 RELAY        ESP32
 

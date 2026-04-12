@@ -3,9 +3,8 @@
 - ESP32 30/38 Pins Devkit
 - Dupont Wire
 
-
 # Installation 
-1. Download the [firmware.bin](https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch/blob/main/ESP32/ESP32-8CH-firmware-0x0.bin) and import in the app. Firmware flash offset is `0x0`
+1. Download the [firmware.bin](https://github.com/xiv3r/ESP8266-ESP32-8ch-smart-switch/blob/main/ESP32/ESP32-8CH-firmware-0x0.bin) and import. flash offset is `0x0`
 - Linux/Windows esptool flash command
 ```
 esptool.py --port COM3 --baud 115200 write_flash 0x0 ESP32-8CH-firmware-0x0.bin
